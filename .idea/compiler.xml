@@ -6,13 +6,15 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="discovry-server" />
         <module name="config-server" />
+        <module name="discovry-server" />
         <module name="my-microservices-app" />
+        <module name="customer" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="config-server" target="19" />
+      <module name="customer" target="19" />
       <module name="discovry-server" target="19" />
       <module name="my-microservices-app" target="1.5" />
     </bytecodeTargetLevel>
@@ -20,6 +22,7 @@
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="config-server" options="-parameters" />
+      <module name="customer" options="-parameters" />
       <module name="discovry-server" options="-parameters" />
     </option>
   </component>
