@@ -41,7 +41,7 @@ public class customerController {
     }
 
 
-   @PostMapping("{/exists/{customer-id}}")
+   @PostMapping("/exists/{customer-id}")
     public ResponseEntity<Boolean> existsById(@PathVariable("customer-id") String custumer_id ){
        return ResponseEntity.ok(this.customerService.existById(custumer_id));
    }
