@@ -1,5 +1,6 @@
-package com.example.productservice.models;
+package com.example.productservice.product.models;
 
+import com.example.productservice.product.models.Category;
 import jakarta.persistence.*;
 import lombok.*;
 import java.math.BigDecimal;

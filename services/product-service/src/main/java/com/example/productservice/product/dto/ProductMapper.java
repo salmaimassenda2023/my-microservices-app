@@ -1,7 +1,7 @@
-package com.example.productservice.dto;
+package com.example.productservice.product.dto;
 
-import com.example.productservice.models.Category;
-import com.example.productservice.models.Product;
+import com.example.productservice.product.models.Category;
+import com.example.productservice.product.models.Product;
 
 public class ProductMapper {
 

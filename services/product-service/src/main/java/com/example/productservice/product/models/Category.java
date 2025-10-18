@@ -1,4 +1,4 @@
-package com.example.productservice.models;
+package com.example.productservice.product.models;
 
 
 import jakarta.persistence.*;
