@@ -20,6 +20,6 @@ public class Product {
     private double availableQuantity;
     private BigDecimal price;
     @ManyToOne
-    @JoinColumn(name = "id_Category")
+    @JoinColumn(name = "category_id")
     private Category category;
 }

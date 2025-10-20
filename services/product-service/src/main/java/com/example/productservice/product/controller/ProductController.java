@@ -1,4 +1,4 @@
-package com.example.productservice.controller;
+package com.example.productservice.product.controller;
 
 import com.example.productservice.product.dto.ProductPurchaseRequest;
 import com.example.productservice.product.dto.ProductPurchaseResponse;
@@ -6,7 +6,6 @@ import com.example.productservice.product.dto.ProductRequest;
 import com.example.productservice.product.dto.ProductResponse;
 import com.example.productservice.product.service.ProductService;
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,10 +13,15 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/products")
-@RequiredArgsConstructor
+
 public class ProductController {
 
     private final ProductService service;
+    // Constructeur manuel
+    public ProductController(ProductService service) {
+        this.service = service;
+    }
+
 
     @PostMapping
     public ResponseEntity<Integer> createProduct(

@@ -2,7 +2,9 @@ package com.example.productservice.product.dto;
 
 import com.example.productservice.product.models.Category;
 import com.example.productservice.product.models.Product;
+import org.springframework.stereotype.Service;
 
+@Service
 public class ProductMapper {
 
    public Product toProduct(ProductRequest request){
