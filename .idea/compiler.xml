@@ -21,12 +21,22 @@
         </processorPath>
         <module name="product-service" />
       </profile>
+      <profile name="Annotation profile for order-service" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/unknown/lombok-unknown.jar" />
+        </processorPath>
+        <module name="order-service" />
+      </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="config-server" target="19" />
       <module name="customer" target="19" />
       <module name="discovry-server" target="19" />
       <module name="my-microservices-app" target="1.5" />
+      <module name="order-service" target="19" />
       <module name="product-service" target="19" />
     </bytecodeTargetLevel>
   </component>
@@ -35,6 +45,7 @@
       <module name="config-server" options="-parameters" />
       <module name="customer" options="-parameters" />
       <module name="discovry-server" options="-parameters" />
+      <module name="order-service" options="-parameters" />
       <module name="product-service" options="-parameters" />
     </option>
   </component>
