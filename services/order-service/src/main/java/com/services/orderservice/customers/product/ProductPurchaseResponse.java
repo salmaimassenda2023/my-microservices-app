@@ -1,4 +1,4 @@
-package com.services.orderservice.product;
+package com.services.orderservice.customers.product;
 
 import java.math.BigDecimal;
 

@@ -1,4 +1,4 @@
-package com.services.orderservice.customer;
+package com.services.orderservice.customers.customer;
 
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;

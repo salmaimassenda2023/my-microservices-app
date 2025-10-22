@@ -1,4 +1,4 @@
-package com.services.orderservice.customer;
+package com.services.orderservice.customers.customer;
 
 public record CustomerResponse(
         String id,
