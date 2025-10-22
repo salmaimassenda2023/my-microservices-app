@@ -6,6 +6,7 @@
       <module fileurl="file://$PROJECT_DIR$/services/customer-service/customer-service.iml" filepath="$PROJECT_DIR$/services/customer-service/customer-service.iml" />
       <module fileurl="file://$PROJECT_DIR$/services/discovry-server/discovry-server.iml" filepath="$PROJECT_DIR$/services/discovry-server/discovry-server.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/my-microservices-app.iml" filepath="$PROJECT_DIR$/.idea/my-microservices-app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/services/notification-service/notification-server.iml" filepath="$PROJECT_DIR$/services/notification-service/notification-server.iml" />
       <module fileurl="file://$PROJECT_DIR$/services/order-service/order-service.iml" filepath="$PROJECT_DIR$/services/order-service/order-service.iml" />
       <module fileurl="file://$PROJECT_DIR$/services/payement/payement-service.iml" filepath="$PROJECT_DIR$/services/payement/payement-service.iml" />
       <module fileurl="file://$PROJECT_DIR$/services/product-service/product-service.iml" filepath="$PROJECT_DIR$/services/product-service/product-service.iml" />
