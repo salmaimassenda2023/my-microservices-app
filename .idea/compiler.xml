@@ -9,8 +9,8 @@
         <outputRelativeToContentRoot value="true" />
         <module name="config-server" />
         <module name="discovry-server" />
+        <module name="customer-service" />
         <module name="my-microservices-app" />
-        <module name="customer" />
       </profile>
       <profile name="Annotation profile for product-service" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
@@ -30,22 +30,33 @@
         </processorPath>
         <module name="order-service" />
       </profile>
+      <profile name="Annotation profile for payement" enabled="true">
+        <sourceOutputDir name="../payement/target/generated-sources/annotations" />
+        <sourceTestOutputDir name="../payement/target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/unknown/lombok-unknown.jar" />
+        </processorPath>
+        <module name="payement-service" />
+      </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="config-server" target="19" />
-      <module name="customer" target="19" />
+      <module name="customer-service" target="19" />
       <module name="discovry-server" target="19" />
       <module name="my-microservices-app" target="1.5" />
       <module name="order-service" target="19" />
+      <module name="payement-service" target="19" />
       <module name="product-service" target="19" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="config-server" options="-parameters" />
-      <module name="customer" options="-parameters" />
+      <module name="customer-service" options="-parameters" />
       <module name="discovry-server" options="-parameters" />
       <module name="order-service" options="-parameters" />
+      <module name="payement-service" options="-parameters" />
       <module name="product-service" options="-parameters" />
     </option>
   </component>
