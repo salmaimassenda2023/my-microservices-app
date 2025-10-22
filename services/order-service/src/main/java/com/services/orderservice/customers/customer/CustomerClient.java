@@ -16,5 +16,5 @@ import org.springframework.web.bind.annotation.PathVariable;
 public interface CustomerClient {
 
     @GetMapping("/{customer-id}")
-    public  ResponseEntity<CustomerResponse> findByid(@PathVariable("customer-id") String custumer_id);
+    public  ResponseEntity<CustomerResponse> findCustomerById(@PathVariable("customer-id") String custumer_id);
 }
