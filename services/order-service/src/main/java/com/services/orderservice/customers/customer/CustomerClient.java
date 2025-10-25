@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.PathVariable;
         name = "custumer-service",
         url = "${application.config.customer-url}"
 )
-
-@Service
 public interface CustomerClient {
 
     @GetMapping("/{customer-id}")
