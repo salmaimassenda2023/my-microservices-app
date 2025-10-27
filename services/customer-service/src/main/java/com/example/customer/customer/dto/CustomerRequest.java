@@ -3,7 +3,9 @@ package com.example.customer.customer.dto;
 import com.example.customer.customer.models.Address;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
+import lombok.Builder;
 
+@Builder
 public record CustomerRequest
         (
              String id ,
