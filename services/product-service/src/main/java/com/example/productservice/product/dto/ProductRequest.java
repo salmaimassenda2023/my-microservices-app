@@ -2,9 +2,12 @@ package com.example.productservice.product.dto;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
+import lombok.Builder;
 
 import java.math.BigDecimal;
 
+
+@Builder
 public record ProductRequest(
         Integer id,
         @NotNull(message = "Product name is required")
