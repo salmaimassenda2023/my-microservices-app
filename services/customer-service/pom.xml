@@ -81,7 +81,13 @@
                 </configuration>
             </plugin>
 
-            <!-- ✨ AJOUTE UNIQUEMENT JACOCO POUR LA COUVERTURE -->
+            <!-- Maven Surefire : Exécute les tests (version gérée par Spring Boot Parent) -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+            </plugin>
+
+            <!-- JaCoCo : Mesure la couverture de code -->
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
@@ -89,7 +95,6 @@
                 <executions>
                     <!-- Prépare l'agent JaCoCo avant les tests -->
                     <execution>
-                        <id>prepare-agent</id>
                         <goals>
                             <goal>prepare-agent</goal>
                         </goals>
@@ -104,16 +109,16 @@
                         </goals>
                     </execution>
 
-                    <!-- Vérifie que la couverture >= 70% (optionnel) -->
+                    <!-- Vérifie que la couverture >= 70% au niveau PACKAGE -->
                     <execution>
-                        <id>check</id>
+                        <id>jacoco-check</id>
                         <goals>
                             <goal>check</goal>
                         </goals>
                         <configuration>
                             <rules>
                                 <rule>
-                                    <element>BUNDLE</element>
+                                    <element>PACKAGE</element>
                                     <limits>
                                         <limit>
                                             <counter>LINE</counter>

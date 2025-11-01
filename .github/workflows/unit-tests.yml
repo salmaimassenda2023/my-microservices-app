@@ -11,17 +11,17 @@ jobs:
   test:
     name: Test ${{ matrix.service }}
     runs-on: ubuntu-latest
-    
+
     strategy:
       fail-fast: false
       matrix:
         service:
-          - customer
+          - customer-service
           - product-service
           - order-service
-          - payement
-          - notification-server
-    
+          - payement-service
+          - notification-service
+
     steps:
       - name: 📥 Checkout Code
         uses: actions/checkout@v4
@@ -67,12 +67,12 @@ jobs:
     needs: test
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
-    
+
     permissions:
       contents: write
       pages: write
       id-token: write
-    
+
     steps:
       - name: 📥 Checkout Code
         uses: actions/checkout@v4
@@ -101,11 +101,11 @@ jobs:
           const path = require('path');
           
           const services = [
-            'customer',
+            'customer-service',
             'product-service', 
             'order-service',
-            'payement',
-            'notification-server'
+            'payement-service',
+            'notification-service'
           ];
           
           const results = {
@@ -124,7 +124,7 @@ jobs:
           services.forEach(service => {
             const jacocoDir = `jacoco-reports/jacoco-report-${service}`;
             const csvPath = path.join(jacocoDir, 'jacoco.csv');
-            
+          
             let coverage = 0;
             if (fs.existsSync(csvPath)) {
               const csv = fs.readFileSync(csvPath, 'utf8');
@@ -136,12 +136,12 @@ jobs:
                 coverage = covered / (missed + covered) * 100;
               }
             }
-            
+          
             results.services.push({
               name: service,
               coverage: parseFloat(coverage.toFixed(2))
             });
-            
+          
             results.global.averageCoverage += coverage;
           });
           
@@ -159,7 +159,7 @@ jobs:
           mkdir -p public
           
           # Copy all JaCoCo reports
-          for service in customer product-service order-service payement notification-server; do
+          for service in customer-service product-service order-service payement-service notification-service; do
             if [ -d "jacoco-reports/jacoco-report-$service" ]; then
               mkdir -p "public/$service"
               cp -r jacoco-reports/jacoco-report-$service/* "public/$service/"
@@ -248,7 +248,7 @@ jobs:
                       <h1>🧪 E-Commerce Microservices</h1>
                       <p class="subtitle">Unit Tests & Coverage Reports</p>
                   </div>
-                  
+          
                   <div class="summary" id="summary">
                       <div class="stat-card">
                           <div class="icon">📊</div>
@@ -266,30 +266,30 @@ jobs:
                           <div class="label">Last Updated</div>
                       </div>
                   </div>
-                  
+          
                   <div class="services" id="services"></div>
               </div>
-              
+          
               <script>
                   fetch('test-summary.json')
                       .then(r => r.json())
                       .then(data => {
                           document.getElementById('avgCoverage').textContent = 
                               data.global.averageCoverage.toFixed(1) + '%';
-                          
+          
                           const date = new Date(data.timestamp);
                           document.getElementById('lastUpdate').textContent = 
                               date.toLocaleDateString();
-                          
+          
                           const servicesDiv = document.getElementById('services');
                           const icons = {
-                              'customer': '👤',
+                              'customer-service': '👤',
                               'product-service': '🛍️',
                               'order-service': '📦',
-                              'payement': '💳',
-                              'notification-server': '📧'
+                              'payement-service': '💳',
+                              'notification-service': '📧'
                           };
-                          
+          
                           data.services.forEach(service => {
                               const card = document.createElement('div');
                               card.className = 'service-card';
