@@ -20,7 +20,6 @@ jobs:
           - product-service
           - order-service
           - payement-service
-          - notification-service
 
     steps:
       - name: 📥 Checkout Code
@@ -104,8 +103,7 @@ jobs:
             'customer-service',
             'product-service', 
             'order-service',
-            'payement-service',
-            'notification-service'
+            'payement-service'
           ];
           
           const results = {
@@ -159,7 +157,7 @@ jobs:
           mkdir -p public
           
           # Copy all JaCoCo reports
-          for service in customer-service product-service order-service payement-service notification-service; do
+          for service in customer-service product-service order-service payement-service; do
             if [ -d "jacoco-reports/jacoco-report-$service" ]; then
               mkdir -p "public/$service"
               cp -r jacoco-reports/jacoco-report-$service/* "public/$service/"
@@ -257,7 +255,7 @@ jobs:
                       </div>
                       <div class="stat-card">
                           <div class="icon">📦</div>
-                          <div class="value">5</div>
+                          <div class="value">4</div>
                           <div class="label">Microservices</div>
                       </div>
                       <div class="stat-card">
@@ -286,8 +284,7 @@ jobs:
                               'customer-service': '👤',
                               'product-service': '🛍️',
                               'order-service': '📦',
-                              'payement-service': '💳',
-                              'notification-service': '📧'
+                              'payement-service': '💳'
                           };
           
                           data.services.forEach(service => {
