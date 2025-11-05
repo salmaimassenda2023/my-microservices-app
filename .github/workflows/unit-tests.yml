@@ -33,9 +33,9 @@ jobs:
           java-version: '21'
           cache: 'maven'
 
-      - name: 🧪 Run Tests
+      - name: 🧪 Run Unit Tests Only (Exclude Integration Tests)
         working-directory: services/${{ matrix.service }}
-        run: mvn clean test
+        run: mvn clean test -Dtest='!**/*ApplicationTests'
 
       - name: 📊 Generate JaCoCo Badge
         id: jacoco
