@@ -309,7 +309,7 @@ class CustomerServiceTest {
                     () -> customerService.findByid("999")
             );
 
-            assertTrue(exception.getMessage().contains("No customer found with the provided ID: 999"));
+            assertTrue(exception.getMsg().contains("No customer found with the provided ID: 999"));
             verify(repository, times(1)).findById("999");
             verify(mapper, never()).fromCustomer(any(Customer.class));
         }

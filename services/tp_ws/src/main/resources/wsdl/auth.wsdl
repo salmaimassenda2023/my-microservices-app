@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:tns="http://example.com/auth"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             targetNamespace="http://example.com/auth"
+             name="AuthenticationService">
+
+    <types>
+        <xsd:schema targetNamespace="http://example.com/auth">
+            <xsd:complexType name="UserProfile">
+                <xsd:sequence>
+                    <xsd:element name="userId" type="xsd:int"/>
+                    <xsd:element name="username" type="xsd:string"/>
+                    <xsd:element name="email" type="xsd:string"/>
+                    <xsd:element name="fullName" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+
+            <xsd:element name="authenticate">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="username" type="xsd:string"/>
+                        <xsd:element name="password" type="xsd:string"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="authenticateResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="return" type="xsd:boolean"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+
+            <xsd:element name="getUserProfile">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="userId" type="xsd:int"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="getUserProfileResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="return" type="tns:UserProfile"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+
+            <xsd:element name="updateUserProfile">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="userId" type="xsd:int"/>
+                        <xsd:element name="profile" type="tns:UserProfile"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="updateUserProfileResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="return" type="xsd:boolean"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:schema>
+    </types>
+
+    <message name="authenticateRequest">
+        <part name="parameters" element="tns:authenticate"/>
+    </message>
+    <message name="authenticateResponse">
+        <part name="parameters" element="tns:authenticateResponse"/>
+    </message>
+
+    <message name="getUserProfileRequest">
+        <part name="parameters" element="tns:getUserProfile"/>
+    </message>
+    <message name="getUserProfileResponse">
+        <part name="parameters" element="tns:getUserProfileResponse"/>
+    </message>
+
+    <message name="updateUserProfileRequest">
+        <part name="parameters" element="tns:updateUserProfile"/>
+    </message>
+    <message name="updateUserProfileResponse">
+        <part name="parameters" element="tns:updateUserProfileResponse"/>
+    </message>
+
+    <portType name="AuthenticationPortType">
+        <operation name="authenticate">
+            <input message="tns:authenticateRequest"/>
+            <output message="tns:authenticateResponse"/>
+        </operation>
+        <operation name="getUserProfile">
+            <input message="tns:getUserProfileRequest"/>
+            <output message="tns:getUserProfileResponse"/>
+        </operation>
+        <operation name="updateUserProfile">
+            <input message="tns:updateUserProfileRequest"/>
+            <output message="tns:updateUserProfileResponse"/>
+        </operation>
+    </portType>
+
+    <binding name="AuthenticationBinding" type="tns:AuthenticationPortType">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+        <operation name="authenticate">
+            <soap:operation soapAction="authenticate"/>
+            <input><soap:body use="literal"/></input>
+            <output><soap:body use="literal"/></output>
+        </operation>
+        <operation name="getUserProfile">
+            <soap:operation soapAction="getUserProfile"/>
+            <input><soap:body use="literal"/></input>
+            <output><soap:body use="literal"/></output>
+        </operation>
+        <operation name="updateUserProfile">
+            <soap:operation soapAction="updateUserProfile"/>
+            <input><soap:body use="literal"/></input>
+            <output><soap:body use="literal"/></output>
+        </operation>
+    </binding>
+
+    <service name="AuthenticationService">
+        <port name="AuthenticationPort" binding="tns:AuthenticationBinding">
+            <soap:address location="http://api.example.com/auth"/>
+        </port>
+    </service>
+</definitions>
