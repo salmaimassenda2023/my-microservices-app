@@ -93,6 +93,14 @@ jobs:
           pattern: jacoco-report-*
           path: jacoco-reports/
 
+      - name: 🔍 Debug - List Downloaded Files
+        run: |
+          echo "=== Test Results Structure ==="
+          ls -R test-results/ || echo "No test results"
+          echo ""
+          echo "=== JaCoCo Reports Structure ==="
+          ls -R jacoco-reports/ || echo "No jacoco reports"
+
       - name: 📊 Generate Summary JSON
         run: |
           node << 'EOF'
@@ -119,48 +127,90 @@ jobs:
             }
           };
           
-          services.forEach(service => {
-            const jacocoDir = `jacoco-reports/jacoco-report-${service}`;
-            const csvPath = path.join(jacocoDir, 'jacoco.csv');
+          let totalCoverage = 0;
+          let validServices = 0;
           
+          services.forEach(service => {
+            // Chercher le CSV dans les 2 structures possibles
+            let csvPath = path.join(`jacoco-reports/jacoco-report-${service}`, 'jacoco.csv');
+            
+            if (!fs.existsSync(csvPath)) {
+              csvPath = path.join(`jacoco-reports/jacoco-report-${service}/jacoco-report-${service}`, 'jacoco.csv');
+            }
+            
             let coverage = 0;
+            
             if (fs.existsSync(csvPath)) {
-              const csv = fs.readFileSync(csvPath, 'utf8');
-              const lines = csv.split('\n');
-              if (lines.length > 1) {
-                const totals = lines[1].split(',');
-                const missed = parseInt(totals[5] || 0);
-                const covered = parseInt(totals[6] || 0);
-                coverage = covered / (missed + covered) * 100;
+              console.log(`✅ Found CSV for ${service} at: ${csvPath}`);
+              
+              try {
+                const csv = fs.readFileSync(csvPath, 'utf8');
+                const lines = csv.split('\n').filter(line => line.trim());
+                
+                if (lines.length > 1) {
+                  // La première ligne est l'en-tête, on somme toutes les autres lignes
+                  let totalMissed = 0;
+                  let totalCovered = 0;
+                  
+                  for (let i = 1; i < lines.length; i++) {
+                    const cols = lines[i].split(',');
+                    // Colonnes JaCoCo: GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+                    totalMissed += parseInt(cols[3] || 0);   // INSTRUCTION_MISSED
+                    totalCovered += parseInt(cols[4] || 0);  // INSTRUCTION_COVERED
+                  }
+                  
+                  if (totalMissed + totalCovered > 0) {
+                    coverage = (totalCovered / (totalMissed + totalCovered)) * 100;
+                  }
+                  
+                  console.log(`   Coverage: ${coverage.toFixed(2)}% (${totalCovered} covered, ${totalMissed} missed)`);
+                }
+                
+                validServices++;
+                totalCoverage += coverage;
+              } catch (error) {
+                console.error(`❌ Error reading CSV for ${service}:`, error.message);
               }
+            } else {
+              console.log(`❌ CSV not found for ${service}`);
             }
           
             results.services.push({
               name: service,
               coverage: parseFloat(coverage.toFixed(2))
             });
-          
-            results.global.averageCoverage += coverage;
           });
           
-          results.global.averageCoverage = parseFloat(
-            (results.global.averageCoverage / services.length).toFixed(2)
-          );
+          results.global.averageCoverage = validServices > 0 
+            ? parseFloat((totalCoverage / validServices).toFixed(2))
+            : 0;
           
           fs.mkdirSync('public', { recursive: true });
           fs.writeFileSync('public/test-summary.json', JSON.stringify(results, null, 2));
-          console.log('✅ Summary generated');
+          
+          console.log('\n✅ Summary generated successfully!');
+          console.log('Average Coverage:', results.global.averageCoverage + '%');
+          console.log('Valid Services:', validServices);
           EOF
 
       - name: 📁 Organize Reports for GitHub Pages
         run: |
           mkdir -p public
           
-          # Copy all JaCoCo reports
+          # Copy all JaCoCo reports (gérer les 2 structures possibles)
           for service in customer-service product-service order-service payement-service; do
+            # Essayer la première structure
             if [ -d "jacoco-reports/jacoco-report-$service" ]; then
               mkdir -p "public/$service"
-              cp -r jacoco-reports/jacoco-report-$service/* "public/$service/"
+              
+              # Vérifier si les fichiers sont directement dans le dossier ou dans un sous-dossier
+              if [ -f "jacoco-reports/jacoco-report-$service/index.html" ]; then
+                cp -r jacoco-reports/jacoco-report-$service/* "public/$service/"
+                echo "✅ Copied $service reports (direct structure)"
+              elif [ -d "jacoco-reports/jacoco-report-$service/jacoco-report-$service" ]; then
+                cp -r jacoco-reports/jacoco-report-$service/jacoco-report-$service/* "public/$service/"
+                echo "✅ Copied $service reports (nested structure)"
+              fi
             fi
           done
           
@@ -227,6 +277,9 @@ jobs:
                       color: #333;
                       margin: 20px 0;
                   }
+                  .service-card .coverage.good { color: #10b981; }
+                  .service-card .coverage.medium { color: #f59e0b; }
+                  .service-card .coverage.low { color: #ef4444; }
                   .service-card a {
                       display: inline-block;
                       padding: 12px 30px;
@@ -238,6 +291,14 @@ jobs:
                       transition: transform 0.2s;
                   }
                   .service-card a:hover { transform: scale(1.05); }
+                  .error { 
+                      background: #fee; 
+                      color: #c00; 
+                      padding: 20px; 
+                      border-radius: 10px; 
+                      text-align: center;
+                      margin: 20px 0;
+                  }
               </style>
           </head>
           <body>
@@ -288,17 +349,26 @@ jobs:
                           };
           
                           data.services.forEach(service => {
+                              const coverage = service.coverage || 0;
+                              let coverageClass = 'low';
+                              if (coverage >= 80) coverageClass = 'good';
+                              else if (coverage >= 60) coverageClass = 'medium';
+                              
                               const card = document.createElement('div');
                               card.className = 'service-card';
                               card.innerHTML = `
                                   <h2>${icons[service.name] || '📦'} ${service.name}</h2>
-                                  <div class="coverage">${service.coverage.toFixed(1)}%</div>
+                                  <div class="coverage ${coverageClass}">${coverage.toFixed(1)}%</div>
                                   <a href="${service.name}/index.html">View Coverage Report →</a>
                               `;
                               servicesDiv.appendChild(card);
                           });
                       })
-                      .catch(err => console.error('Error loading summary:', err));
+                      .catch(err => {
+                          console.error('Error loading summary:', err);
+                          document.getElementById('services').innerHTML = 
+                              '<div class="error">❌ Error loading test summary</div>';
+                      });
               </script>
           </body>
           </html>
