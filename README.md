@@ -1,4 +1,4 @@
-#  E-Commerce Microservices Platform
+#  Event-Driven Microservices Architecture using Spring Cloud & Apache Kafka, with comprehensive testing & CI/CD.
 
 [![Java](https://img.shields.io/badge/Java-21-orange.svg)](https://www.oracle.com/java/)
 [![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.2-brightgreen.svg)](https://spring.io/projects/spring-boot)
@@ -6,7 +6,6 @@
 [![Tests](https://img.shields.io/badge/tests-passing-brightgreen.svg)]()
 [![Coverage](https://img.shields.io/badge/coverage-50.3%25-yellow.svg)]()
 
-> **Event-Driven Microservices Architecture** using Spring Cloud & Apache Kafka, with comprehensive testing & CI/CD.
 
 ---
 
@@ -29,7 +28,7 @@
 
 ---
 
-## 🧩 Technical Architecture
+##  Technical Architecture
 
 ### 1. Domain-Driven Design (DDD)
 
