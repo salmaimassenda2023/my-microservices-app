@@ -1,0 +1,91 @@
+{
+  "info": {
+    "_postman_id": "53869f54-99fa-4200-b0fe-8bf699ca39d5",
+    "name": "Keycloak Auth",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "40649787",
+    "_collection_link": "https://api-team-5429.postman.co/workspace/my-microservices-app~7c0d106f-c617-4f78-9b95-36546127db5f/collection/40649787-53869f54-99fa-4200-b0fe-8bf699ca39d5?action=share&source=collection_link&creator=40649787"
+  },
+  "item": [
+    {
+      "name": "Login",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "// ✅ Test 1 — Status 200\r",
+              "pm.test(\"Status 200\", () => {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "// ✅ Récupérer la réponse JSON\r",
+              "const json = pm.response.json();\r",
+              "\r",
+              "// ✅ Test 2 — Token existe\r",
+              "pm.test(\"Access token exists\", () => {\r",
+              "    pm.expect(json).to.have.property(\"access_token\");\r",
+              "});\r",
+              "\r",
+              "pm.environment.set(\"access_token\", json.access_token);\r",
+              "\r",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": [
+            {
+              "key": "grant_type",
+              "value": "client_credentials",
+              "type": "text"
+            },
+            {
+              "key": "client_id",
+              "value": "micro-services-api",
+              "type": "text"
+            },
+            {
+              "key": "client_secret",
+              "value": "LtaeRt69uLSY2G2LdmM3VeEyLwL4rGS6",
+              "type": "text"
+            }
+          ]
+        },
+        "url": {
+          "raw": "http://localhost:9098/realms/micro-services/protocol/openid-connect/token",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "9098",
+          "path": [
+            "realms",
+            "micro-services",
+            "protocol",
+            "openid-connect",
+            "token"
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    {
+      "key": "access_token",
+      "value": ""
+    }
+  ]
+}

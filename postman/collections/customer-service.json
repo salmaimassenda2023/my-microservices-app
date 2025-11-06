@@ -1,0 +1,186 @@
+{
+  "info": {
+    "_postman_id": "d79292f4-142a-4df6-9701-d2c91bd5ef00",
+    "name": "Customer Service",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "40649787",
+    "_collection_link": "https://api-team-5429.postman.co/workspace/my-microservices-app~7c0d106f-c617-4f78-9b95-36546127db5f/collection/40649787-d79292f4-142a-4df6-9701-d2c91bd5ef00?action=share&source=collection_link&creator=40649787"
+  },
+  "item": [
+    {
+      "name": "Create Customer",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJUdFRLdjR4N1BJLXFiblljMTNqZnREUTJTQ0Y3S0IzN0Vpd1AwMDc4WkRvIn0.eyJleHAiOjE3NjI0Mjc5MjMsImlhdCI6MTc2MjQyNzYyMywianRpIjoiZjdmZWFiNGUtOTkwNy00N2Y3LTlhOTUtNjM1OGYxOWNkZDExIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo5MDk4L3JlYWxtcy9taWNyby1zZXJ2aWNlcyIsImF1ZCI6ImFjY291bnQiLCJzdWIiOiI3NGE1OGNjYy1lMjgzLTRiNGItOTU3NS1jNjNmNGY0NGRjNjUiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJtaWNyby1zZXJ2aWNlcy1hcGkiLCJhY3IiOiIxIiwiYWxsb3dlZC1vcmlnaW5zIjpbIi8qIl0sInJlYWxtX2FjY2VzcyI6eyJyb2xlcyI6WyJvZmZsaW5lX2FjY2VzcyIsImRlZmF1bHQtcm9sZXMtbWljcm8tc2VydmljZXMiLCJ1bWFfYXV0aG9yaXphdGlvbiJdfSwicmVzb3VyY2VfYWNjZXNzIjp7Im1pY3JvLXNlcnZpY2VzLWFwaSI6eyJyb2xlcyI6WyJ1bWFfcHJvdGVjdGlvbiJdfSwiYWNjb3VudCI6eyJyb2xlcyI6WyJtYW5hZ2UtYWNjb3VudCIsIm1hbmFnZS1hY2NvdW50LWxpbmtzIiwidmlldy1wcm9maWxlIl19fSwic2NvcGUiOiJlbWFpbCBwcm9maWxlIiwiZW1haWxfdmVyaWZpZWQiOmZhbHNlLCJjbGllbnRIb3N0IjoiMTcyLjIwLjAuMSIsInByZWZlcnJlZF91c2VybmFtZSI6InNlcnZpY2UtYWNjb3VudC1taWNyby1zZXJ2aWNlcy1hcGkiLCJjbGllbnRBZGRyZXNzIjoiMTcyLjIwLjAuMSIsImNsaWVudF9pZCI6Im1pY3JvLXNlcnZpY2VzLWFwaSJ9.dWeH0ymuMA43rbeXdNit7g1WpOrpNV7u9xq4bxg9AzDfalwX-JEEkHlLQgrCbmC_9Xj8IR_Z28Tfz1lo9MufoohrbFxApVO3Ve9zfZYWnLbR1g_2_oZ0VUFAXj7-TgwLrOCq_p51VGMQck7nG6Xivn-nABm8amucnPbLX_gsTB_y8nxWraE6MWr_FHVlGqjIgnXKKPwWMGLJ_VeBY2vMcZuTIAI0rfCttge5-A-C7IpqHbfHeIEULYCGQsN1Xk1Pom7iY_MPufZEPyjE9bWZVXKs2t7paGSbCWy2duP4VZ8TXsR8jh2U20ySxwMyAd0mo3_xdUPhS5zuD6EUfUI29g",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"id\": \"CUST001\",\r\n  \"firstName\": \"Salma\",\r\n  \"lastName\": \"Imassenda\",\r\n  \"email\": \"salma.imassenda@example.com\",\r\n  \"adress\": {\r\n    \"street\": \"123 Rue des Fleurs\",\r\n    \"city\": \"Casablanca\",\r\n    \"country\": \"Maroc\",\r\n    \"zipCode\": \"20000\"\r\n  }\r\n}\r\n",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url_customer}}",
+          "host": [
+            "{{base_url_customer}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Check if Customer Exists",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{access_token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"id\": \"CUST001\",\r\n  \"firstName\": \"Salma\",\r\n  \"lastName\": \"Imassenda\",\r\n  \"email\": \"salma.imassenda@example.com\",\r\n  \"adress\": {\r\n    \"street\": \"123 Rue des Fleurs\",\r\n    \"city\": \"Casablanca\",\r\n    \"country\": \"Maroc\",\r\n    \"zipCode\": \"20000\"\r\n  }\r\n}\r\n",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url_customer}}/exists/CUST001",
+          "host": [
+            "{{base_url_customer}}"
+          ],
+          "path": [
+            "exists",
+            "CUST001"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get All Customers",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{access_token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url_customer}}",
+          "host": [
+            "{{base_url_customer}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get Customer by ID",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{access_token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url_customer}}/CUST001",
+          "host": [
+            "{{base_url_customer}}"
+          ],
+          "path": [
+            "CUST001"
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url_customer",
+      "value": ""
+    }
+  ]
+}

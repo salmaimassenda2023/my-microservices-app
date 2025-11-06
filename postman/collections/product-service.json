@@ -1,0 +1,264 @@
+{
+  "info": {
+    "_postman_id": "650f207e-a1e9-4840-af2c-a511c2a4d9d6",
+    "name": "Product Service",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "40649787",
+    "_collection_link": "https://api-team-5429.postman.co/workspace/my-microservices-app~7c0d106f-c617-4f78-9b95-36546127db5f/collection/40649787-650f207e-a1e9-4840-af2c-a511c2a4d9d6?action=share&source=collection_link&creator=40649787"
+  },
+  "item": [
+    {
+      "name": "Create Product",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{access_token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"name\": \"Laptop\",\r\n  \"description\": \"High-end gaming laptop\",\r\n  \"availableQuantity\": 10,\r\n  \"price\": 1200.50,\r\n  \"id_Category\": 1\r\n}\r\n",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url_product}}",
+          "host": [
+            "{{base_url_product}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Purchase Products",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", () => {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "const json = pm.response.json();\r",
+              "\r",
+              "pm.test(\"Response should be a list of purchased products\", () => {\r",
+              "    pm.expect(json).to.be.an(\"array\");\r",
+              "    if (json.length > 0) {\r",
+              "        pm.expect(json[0]).to.have.property(\"productId\");\r",
+              "        pm.expect(json[0]).to.have.property(\"quantity\");\r",
+              "    }\r",
+              "});\r",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{access_token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "[\r\n  {\r\n    \"productId\": 1,\r\n    \"quantity\": 2\r\n  },\r\n  {\r\n    \"productId\": 51,\r\n    \"quantity\": 1\r\n  }\r\n]\r\n",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url_product}}/purchase",
+          "host": [
+            "{{base_url_product}}"
+          ],
+          "path": [
+            "purchase"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get All Products",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", () => {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "const json = pm.response.json();\r",
+              "\r",
+              "pm.test(\"Response should be an array\", () => {\r",
+              "    pm.expect(json).to.be.an(\"array\");\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Each product should have name and price\", () => {\r",
+              "    if (json.length > 0) {\r",
+              "        pm.expect(json[0]).to.have.property(\"name\");\r",
+              "        pm.expect(json[0]).to.have.property(\"price\");\r",
+              "    }\r",
+              "});\r",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{access_token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"name\": \"Laptop\",\r\n  \"description\": \"High-end gaming laptop\",\r\n  \"availableQuantity\": 10,\r\n  \"price\": 1200.50,\r\n  \"id_Category\": 1\r\n}\r\n",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url_product}}",
+          "host": [
+            "{{base_url_product}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get Product by ID",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", () => {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "const product = pm.response.json();\r",
+              "\r",
+              "pm.test(\"Product has ID, name, price\", () => {\r",
+              "    pm.expect(product).to.have.property(\"id\");\r",
+              "    pm.expect(product).to.have.property(\"name\");\r",
+              "    pm.expect(product).to.have.property(\"price\");\r",
+              "});\r",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{access_token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"name\": \"Laptop\",\r\n  \"description\": \"High-end gaming laptop\",\r\n  \"availableQuantity\": 10,\r\n  \"price\": 1200.50,\r\n  \"id_Category\": 1\r\n}\r\n",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url_product}}/1",
+          "host": [
+            "{{base_url_product}}"
+          ],
+          "path": [
+            "1"
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url_product",
+      "value": ""
+    }
+  ]
+}
