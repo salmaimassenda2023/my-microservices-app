@@ -22,7 +22,7 @@ import java.util.List;
 @Table(name = "customer_order")
 public class Order {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(unique = true,  nullable = false)

@@ -1,0 +1,19 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    database-platform: org.hibernate.dialect.H2Dialect
+    show-sql: true
+
+# URLs des services externes (WireMock)
+application.config.customer-url: http://localhost:8089/api/v1/customers
+application.config.product-url: http://localhost:8089/api/v1/products
+application.config.payment-url: http://localhost:8089/api/v1/payments
+
+# Kafka (optionnel ou mock)
+spring.kafka.producer.bootstrap-servers: localhost:9092
