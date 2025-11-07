@@ -18,8 +18,8 @@ jobs:
         service:
           - customer-service
           - product-service
-          - order-service
           - payement-service
+          # order-service temporairement désactivé
 
     steps:
       - name: 📥 Checkout Code
@@ -107,10 +107,10 @@ jobs:
           const fs = require('fs');
           const path = require('path');
           
+          // ⬇️ Liste mise à jour sans order-service
           const services = [
             'customer-service',
             'product-service', 
-            'order-service',
             'payement-service'
           ];
           
@@ -131,7 +131,6 @@ jobs:
           let validServices = 0;
           
           services.forEach(service => {
-            // Chercher le CSV dans les 2 structures possibles
             let csvPath = path.join(`jacoco-reports/jacoco-report-${service}`, 'jacoco.csv');
             
             if (!fs.existsSync(csvPath)) {
@@ -148,15 +147,13 @@ jobs:
                 const lines = csv.split('\n').filter(line => line.trim());
                 
                 if (lines.length > 1) {
-                  // La première ligne est l'en-tête, on somme toutes les autres lignes
                   let totalMissed = 0;
                   let totalCovered = 0;
                   
                   for (let i = 1; i < lines.length; i++) {
                     const cols = lines[i].split(',');
-                    // Colonnes JaCoCo: GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
-                    totalMissed += parseInt(cols[3] || 0);   // INSTRUCTION_MISSED
-                    totalCovered += parseInt(cols[4] || 0);  // INSTRUCTION_COVERED
+                    totalMissed += parseInt(cols[3] || 0);
+                    totalCovered += parseInt(cols[4] || 0);
                   }
                   
                   if (totalMissed + totalCovered > 0) {
@@ -197,13 +194,11 @@ jobs:
         run: |
           mkdir -p public
           
-          # Copy all JaCoCo reports (gérer les 2 structures possibles)
-          for service in customer-service product-service order-service payement-service; do
-            # Essayer la première structure
+          # ⬇️ Liste mise à jour sans order-service
+          for service in customer-service product-service payement-service; do
             if [ -d "jacoco-reports/jacoco-report-$service" ]; then
               mkdir -p "public/$service"
               
-              # Vérifier si les fichiers sont directement dans le dossier ou dans un sous-dossier
               if [ -f "jacoco-reports/jacoco-report-$service/index.html" ]; then
                 cp -r jacoco-reports/jacoco-report-$service/* "public/$service/"
                 echo "✅ Copied $service reports (direct structure)"
@@ -316,7 +311,7 @@ jobs:
                       </div>
                       <div class="stat-card">
                           <div class="icon">📦</div>
-                          <div class="value">4</div>
+                          <div class="value">3</div>
                           <div class="label">Microservices</div>
                       </div>
                       <div class="stat-card">
@@ -344,7 +339,6 @@ jobs:
                           const icons = {
                               'customer-service': '👤',
                               'product-service': '🛍️',
-                              'order-service': '📦',
                               'payement-service': '💳'
                           };
           

@@ -1,0 +1,48 @@
+name: Postman API Tests (All Collections)
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+  workflow_dispatch:
+
+jobs:
+  api-tests:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install Newman
+        run: |
+          npm install -g newman
+          npm install -g newman-reporter-htmlextra
+
+      - name: Create reports directory
+        run: mkdir -p reports
+
+      - name: Run All Postman Collections
+        run: |
+          for collection in postman/collections/*.json; do
+            collection_name=$(basename "$collection" .json)
+            echo "Running $collection_name..."
+            newman run "$collection" \
+              -e postman/environments/environment.json \
+              --reporters cli,htmlextra \
+              --reporter-htmlextra-export "reports/${collection_name}-report.html" \
+              || echo "⚠️ $collection_name failed"
+          done
+
+      - name: Upload test reports
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: postman-test-reports
+          path: reports/
