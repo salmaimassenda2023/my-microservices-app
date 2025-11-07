@@ -12,7 +12,8 @@
 
 ##  Architecture Overview
 
-![img_1.png](img_1.png)
+![](./gif.gif)
+
 
 ### Core Services
 - **Customer Service** — user management (DDD)
@@ -33,7 +34,7 @@
 
 ### 1. Domain-Driven Design (DDD)
 
-![img.png](gif.gif)
+![img.png](img.png)
 
 
 ### 2. Event-Driven Architecture
