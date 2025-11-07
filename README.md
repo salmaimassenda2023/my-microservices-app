@@ -33,7 +33,8 @@
 
 ### 1. Domain-Driven Design (DDD)
 
-![img.png](img.png)
+![img.png](gif.gif)
+
 
 ### 2. Event-Driven Architecture
 
