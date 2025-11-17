@@ -8,19 +8,11 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="config-server" />
-        <module name="discovry-server" />
         <module name="customer-service" />
+        <module name="discovry-server" />
         <module name="gateway" />
         <module name="my-microservices-app" />
-      </profile>
-      <profile name="Annotation profile for product-service" enabled="true">
-        <sourceOutputDir name="target/generated-sources/annotations" />
-        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
-        <outputRelativeToContentRoot value="true" />
-        <processorPath useClasspath="false">
-          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.40/lombok-1.18.40.jar" />
-        </processorPath>
-        <module name="product-service" />
+        <module name="customer" />
       </profile>
       <profile name="Annotation profile for order-service" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
@@ -31,6 +23,15 @@
         </processorPath>
         <module name="order-service" />
       </profile>
+      <profile name="Annotation profile for product-service" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.40/lombok-1.18.40.jar" />
+        </processorPath>
+        <module name="product-service" />
+      </profile>
       <profile name="Annotation profile for payement" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
@@ -39,16 +40,19 @@
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.30/lombok-1.18.30.jar" />
         </processorPath>
         <module name="payement-service" />
+        <module name="notification-server" />
         <module name="notification-service" />
         <module name="payement" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="config-server" target="19" />
+      <module name="customer" target="19" />
       <module name="customer-service" target="19" />
       <module name="discovry-server" target="19" />
       <module name="gateway" target="19" />
       <module name="my-microservices-app" target="1.5" />
+      <module name="notification-server" target="19" />
       <module name="notification-service" target="19" />
       <module name="order-service" target="19" />
       <module name="payement" target="19" />
@@ -59,9 +63,11 @@
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="config-server" options="-parameters" />
+      <module name="customer" options="-parameters" />
       <module name="customer-service" options="-parameters" />
       <module name="discovry-server" options="-parameters" />
       <module name="gateway" options="-parameters" />
+      <module name="notification-server" options="-parameters" />
       <module name="notification-service" options="-parameters" />
       <module name="order-service" options="-parameters" />
       <module name="payement" options="-parameters" />
